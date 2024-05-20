@@ -1,3 +1,18 @@
+# Overview
+
+Tecnologias & Conceptos en uso:
+```
+React
+-- useState
+-- useMemo
+-- Custom Hooks
+Vite
+Tailwind
+
+```
+
+[LiveSite](https://widdou-learn-calculadorapropina.netlify.app/)
+
 # Tailwind
 
 Framework CSS basado en Utilidades. Cada clase posee propiedades
