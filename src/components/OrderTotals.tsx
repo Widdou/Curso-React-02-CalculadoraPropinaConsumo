@@ -1,11 +1,12 @@
 import { useMemo } from "react"
 import { formatCurrency } from "../helpers"
 import type { OrderItem } from "../types"
+import { OrderActions } from "../reducers/order-reducer"
 
 type OrderTotalsProps = {
   order: OrderItem[]
   tip: number
-  setTip: React.Dispatch<React.SetStateAction<number>>
+  dispatch: React.Dispatch<OrderActions>
 }
 
 const tipOptions = [
@@ -26,7 +27,7 @@ const tipOptions = [
   },
 ]
 
-export default function OrderTotals({order, tip, setTip} : OrderTotalsProps) {
+export default function OrderTotals({order, tip, dispatch} : OrderTotalsProps) {
 
   const subtotalAmount = useMemo(() => order.reduce((total, orderItem) => {
     total = total + (orderItem.price * orderItem.quantity)
@@ -53,7 +54,8 @@ export default function OrderTotals({order, tip, setTip} : OrderTotalsProps) {
               type="radio" 
               name="tip" 
               value={tipOption.value}
-              onChange={(e) => setTip(+e.target.value)}
+              onChange={(e) => 
+                dispatch({type: "add-tip", payload: {value: +e.target.value}})}
               checked={tipOption.value === tip}
             /> {tipOption.label}</label>
           </div>

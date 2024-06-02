@@ -1,12 +1,13 @@
 import { menuItems } from "./data/db"
 
-import useOrder from "./hooks/useOrder"
 import MenuItem from "./components/MenuItem"
 import OrderContent from "./components/OrderContent"
+import { useReducer } from "react"
+import { OrderReducer, initialState } from "./reducers/order-reducer"
 
 function App() {
 
-  const { order, tip, addItem, removeOrderItem, setTip, placeOrder} = useOrder()
+  const [state, dispatch] = useReducer(OrderReducer, initialState)
 
   return (
     <>
@@ -29,7 +30,7 @@ function App() {
               return <MenuItem
                 key={item.id}
                 item={item}
-                addItem={() => addItem(item)}
+                dispatch={dispatch}
               />
             })}
 
@@ -37,11 +38,9 @@ function App() {
         </div>
 
         <OrderContent
-          order={order}
-          tip={tip}
-          setTip={setTip}
-          removeOrderItem={removeOrderItem}
-          placeOrder={placeOrder}
+          order={state.order}
+          tip={state.tip}
+          dispatch={dispatch}
         />
 
       </main>

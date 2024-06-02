@@ -4,21 +4,18 @@ import { Dispatch, SetStateAction } from "react"
 import type { OrderItem } from "../types"
 import OrderItemDetail from "./OrderItemDetail"
 import OrderTotals from "./OrderTotals"
+import { OrderActions } from "../reducers/order-reducer"
 
 type OrderContentProps = {
   order: OrderItem[]
   tip: number
-  setTip: Dispatch<SetStateAction<number>>
-  removeOrderItem: (orderItem : OrderItem['id']) => void
-  placeOrder: () => void
+  dispatch: React.Dispatch<OrderActions>
 }
 
 export default function OrderContent({
     order,
     tip,
-    setTip,
-    removeOrderItem,
-    placeOrder
+    dispatch,
   } : OrderContentProps) {
   return (<>
     <div>
@@ -36,14 +33,14 @@ export default function OrderContent({
               <OrderItemDetail
                 key={orderItem.id}
                 orderItem={orderItem}
-                removeOrderItem={removeOrderItem}
+                dispatch={dispatch}
               />
             </>)}
 
             <OrderTotals
               order={order}
               tip={tip}
-              setTip={setTip}
+              dispatch={dispatch}
             />
 
             <button
@@ -52,7 +49,7 @@ export default function OrderContent({
                 hover:bg-rose-500 hover:text-white
                 active:bg-rose-700 "
               disabled={order.length === 0}
-              onClick={placeOrder}
+              onClick={() => dispatch({type: 'place-order'})}
             >Guardar Orden</button>
             
           </>
